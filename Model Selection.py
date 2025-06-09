@@ -12,7 +12,7 @@ import numpy as np
 df = pd.read_csv('CCPP_data.csv')
 
 # Display first few rows
-print(df.head())
+# print(df.head())
 
 # Define features and target
 X = df[['AT', 'V', 'AP', 'RH']]  # Feature columns
@@ -82,3 +82,14 @@ test_r2 = r2_score(y_test, y_pred)
 print(f"\n Final Evaluation on Test Set using {best_model_name}:")
 print(f"Test RMSE: {test_rmse:.2f}")
 print(f"Test R²: {test_r2:.4f}")
+
+# VISUALISATION - PREDICTED VS ACTUAL ENERGY OUTPUT
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, y_pred, alpha=0.6, color='teal', edgecolor='k')
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], color='red', lw=2, linestyle='--')
+plt.title(f'{best_model_name} — Predicted vs Actual Energy Output', fontsize=14)
+plt.xlabel('Actual PE (MW)', fontsize=12)
+plt.ylabel('Predicted PE (MW)', fontsize=12)
+plt.grid(True)
+plt.tight_layout()
+plt.show()
