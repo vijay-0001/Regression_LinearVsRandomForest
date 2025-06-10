@@ -6,6 +6,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import mean_squared_error, r2_score
 import numpy as np
+import seaborn as sns
+
 
 # LOADING AND SPLITTING THE COMBINED CYCLE POWER PLANT DATA
 
@@ -93,3 +95,32 @@ plt.ylabel('Predicted PE (MW)', fontsize=12)
 plt.grid(True)
 plt.tight_layout()
 plt.show()
+
+# EXPERIMENTING TO FIND OUT WHICH FEATURE HAS THE HIGHEST IMPACT ON THE OUTPUT
+
+# Compute correlation matrix
+correlation_matrix = df.corr()
+
+# Display correlation of all features with the target PE
+correlation_with_target = correlation_matrix["PE"].sort_values(ascending=False)
+
+print("🔍 Correlation of features with target variable (PE):")
+print(correlation_with_target)
+
+
+
+
+# Calculate correlation with target
+correlation_with_target = df.corr()["PE"].drop("PE").sort_values(key=abs, ascending=False)
+
+# Plot as bar chart
+plt.figure(figsize=(8, 5))
+correlation_with_target.plot(kind='bar', color='skyblue', edgecolor='black')
+plt.title("Feature Correlation with Power Output (PE)", fontsize=14)
+plt.ylabel("Pearson Correlation Coefficient", fontsize=12)
+plt.xlabel("Features", fontsize=12)
+plt.axhline(0, color='gray', linewidth=0.8, linestyle='--')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
